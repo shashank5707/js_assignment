@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        body {
+            font-family: monospace;
+            font-size:24px;
+            color:rgb(100, 98, 98);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        input {
+            height: 2rem;
+            width: 15rem;
+        }
+
+        .error {
+            border: 2px solid red;
+        }
+
+        .ok {
+            border: 1px solid black;
+        }
+        input[type='submit']{
+            background-color:black;
+            border: 0 none;
+            color: white;
+            padding:10px 20px;
+            cursor:pointer;
+        }
+    </style>
+    <script>
+        var formsubmit = document.getElementById("form-submit");
+         formsubmit.addEventListener('submit', function (e) {
+    // prevent the form from submitting
+    e.preventDefault();
+
+});
+
+        function validateAll(e) {
+           
+            if (validateName() && validatePhone()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        function validateName() {
+            var nameValidation = /^[a-zA-Z]{2,10}$/;
+            var namefield = document.getElementById("name").value;
+
+            console.log(namefield);
+            var erName = document.getElementById("er-name");
+            if (!nameValidation.test(namefield)) {
+                document.getElementById("name").className = "error";
+
+                console.log("error in name");
+                erName.innerHTML =
+                    "Name should not contain numbers and should be between 2 to 30 characters long";
+                return true;
+            } else if (nameValidation.test(namefield)) {
+                document.getElementById("name").className = "ok";
+                erName.innerHTML = "";
+                console.log("name is good");
+                return false;
+            }
+        }
+        function validatePhone() {
+            var phoneValidation = /^[789]\d{9}$/;
+            var phonefield = document.getElementById("phone").value;
+            console.log(phonefield);
+            var erNo = document.getElementById("er-mob");
+            if (!phoneValidation.test(phonefield)) {
+                document.getElementById("phone").className = "error";
+                console.log("error in number");
+                erNo.innerHTML =
+                    "Number should not be blank and contain 10 digits numbers only";
+                return true;
+            } else if (phoneValidation.test(phoneValidation)) {
+                document.getElementById("phone").className = "ok";
+                erNo.innerHTML = "";
+                console.log("number is ok");
+                return false;
+            }
+        }
+
+        function validateEmail() {
+            var emailValidation = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
+            var emailfield = document.getElementById("email").value;
+            var erMail = document.getElementById("er-mail");
+            if (!emailValidation.test(emailfield)) {
+                document.getElementById("email").className = "error";
+                console.log("ok");
+                erMail.innerHTML = "Enter valid email address";
+                return true;
+            } else if (emailValidation.test(emailfield)) {
+                document.getElementById("email").className = "ok";
+                erMail.innerHTML = "";
+                console.log("err");
+                return false;
+            }
+        }
+         
+         
+        function validatePw(){
+           var pwfield = document.getElementById("password").value;var pwValidation = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+            console.log(pwfield);
+            var erPw = document.getElementById("er-pw")
+            if(!pwValidation.test(pwfield)){
+                erPw.innerHTML = "enter valid password";
+                document.getElementById("password").className = "error";
+                return true;
+            }
+            else if(pwValidation.test(pwfield)){
+                erPw.innerHTML ="";
+                document.getElementById("password").className = "ok";
+                return false;
+            }
+        }
+       
+        function validateCpw(){
+             var cpwfield = document.getElementById("conf-password").value;
+           var pwfield = document.getElementById("password").value;
+            var cpwValidation = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+            console.log(cpwfield);
+            var erCpw = document.getElementById("er-cpw")
+            if(!cpwValidation.test(cpwfield)){
+                erCpw.innerHTML = "enter valid password";
+                document.getElementById("conf-password").className = "error";
+                return true;
+            }
+            else if(cpwValidation.test(cpwfield)){
+                erCpw.innerHTML ="";
+                document.getElementById("conf-password").className = "ok";
+                 if (cpwfield != pwfield){
+                erCpw.innerHTML ="passwords do not match";
+                document.getElementById("conf-password").className = "error";
+                return false;
+            }
+
+                
+            }
+           
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Registation form</h1>
+    <form id="form-submit">
+        Name: <input id="name" type="text" onblur="return validateName()" />
+        <p id="er-name"></p>
+        Phone number:
+        <input id="phone" type="text" onblur="return validatePhone()" />
+        <p id="er-mob"></p>
+        Email: <input id="email" type="text" onblur="return validateEmail()" />
+        <p id="er-mail"></p>
+
+        Password: <input id="password" onblur="return validatePw()">
+        <p id="er-pw"></p>
+
+        Confirm Password: <input id="conf-password" onblur="return validateCpw()">
+        <p id="er-cpw"></p>
+        <input id="submit" type="submit" value="Submit" onclick="return validateAll(this)"/>
+          
+    </form>
+    <script src="form.js"></script>
+</body>
+
+</html>
